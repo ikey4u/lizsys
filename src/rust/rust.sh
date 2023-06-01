@@ -36,9 +36,8 @@ eval "\$(starship init bash)"
 EOF
     fi
     mkdir -p ${HOME}/.config
-    if [[ ! -e ${HOME}/.config/starship.toml ]]; then
-        ln -s ${SCRIPT_DIR}/starship.toml ${HOME}/.config/starship.toml
-    fi
+    rm -rf ${HOME}/.config/starship.toml
+    ln -s ${SCRIPT_DIR}/starship.toml ${HOME}/.config/starship.toml
 
     # vivid
     ${HOME}/.cargo/bin/cargo install vivid
@@ -53,9 +52,8 @@ EOF
     # gitui
     ${HOME}/.cargo/bin/cargo install gitui
     mkdir -p $HOME/.config/gitui
-    if [[ ! -e $HOME/.config/gitui/key_bindings.ron ]]; then
-        ln -s ${SCRIPT_DIR}/key_bindings.ron $HOME/.config/gitui/key_bindings.ron
-    fi
+    rm -rf $HOME/.config/gitui/key_bindings.ron
+    ln -s ${SCRIPT_DIR}/key_bindings.ron $HOME/.config/gitui/key_bindings.ron
 }
 
 rust_install
