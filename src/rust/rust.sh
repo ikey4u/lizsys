@@ -6,6 +6,7 @@ function rust_install() {
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     fi
 
+    # TODO: replace with LIZSYS_SHELL_CONF
     local shconf=
     case "$(basename $SHELL)" in
         bash)

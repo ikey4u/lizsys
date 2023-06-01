@@ -5,6 +5,7 @@ function main() {
     bash ${LIZSYS_HOME}/src/python/python.sh
     bash ${LIZSYS_HOME}/src/rust/rust.sh
     bash ${LIZSYS_HOME}/src/tmux/tmux.sh
+    bash ${LIZSYS_HOME}/src/llvm/llvm.sh
 }
 
 main
