@@ -7,6 +7,7 @@ function main() {
     bash ${LIZSYS_HOME}/src/tmux/tmux.sh
     bash ${LIZSYS_HOME}/src/llvm/llvm.sh
     bash ${LIZSYS_HOME}/src/rime/rime.sh
+    bash ${LIZSYS_HOME}/src/appimage/appimage.sh
 }
 
 main
