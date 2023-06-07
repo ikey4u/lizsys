@@ -39,15 +39,24 @@ alias xvimvs="nvr --servername /tmp/nvim -O "
 alias xvimt="nvr --servername /tmp/nvim --remote-tab "
 EOF
     fi
+    local nvimconf=${HOME}/.config/nvim
+    if [[ -d "${nvimconf}" ]]; then
+        echo "[x] nvim configuration ${nvimconf} exists, please remove it first"
+        return 1
+    fi
     if [[ -L "${HOME}/.config/nvim" ]]; then
         rm -rf ${HOME}/.config/nvim
     fi
     ln -sf ${SCRIPT_DIR}/nvim ${HOME}/.config/nvim
 
-    if [[ -d "${HOME}/.pyenv" ]] && [[ -e "${HOME}/.pyenv/shims/python3" ]]; then
-        ${HOME}/.pyenv/shims/python3 -m pip install pynvim neovim neovim-remote
+    if [[ ! -x $(command -v python3) ]]; then
+        if [[ -d "${HOME}/.pyenv" ]] && [[ -e "${HOME}/.pyenv/shims/python3" ]]; then
+            ${HOME}/.pyenv/shims/python3 -m pip install pynvim neovim neovim-remote
+        else
+            echo "[!] please install pyenv then python3"
+        fi
     else
-        echo "[!] please install pyenv then python3"
+        python3 -m pip install --user pynvim neovim neovim-remote 
     fi
 }
 

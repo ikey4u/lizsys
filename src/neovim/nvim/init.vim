@@ -224,6 +224,9 @@ if exists('$NVIM_PYTHON_EXE_PATH')
 else
     if g:os == 'Linux' || g:os == 'Darwin'
         let g:python3_host_prog = expand("$HOME/.pyenv/shims/python3")
+        if !filereadable(g:python3_host_prog)
+            let g:python3_host_prog = "python3"
+        endif
     else
         let g:python3_host_prog = expand("py")
     endif
