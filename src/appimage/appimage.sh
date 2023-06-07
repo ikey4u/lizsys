@@ -44,9 +44,15 @@ Keywords=music;qq;qqmusic;
 EOF
 }
 
+case $1 in
+    appimage.qqmusic)
+        appimage_install_qqmusic
+        ;;
+    appimage.keepassxc)
+        appimage_install_keepassxc
+        ;;
+esac
 if [[ -x $(command -v apt-get) ]]; then
     sudo apt-get install desktop-file-utils
+    update-desktop-database ${DESKTOP_ENTRY_DIR}
 fi
-appimage_install_keepassxc
-appimage_install_qqmusic
-update-desktop-database ${DESKTOP_ENTRY_DIR}
