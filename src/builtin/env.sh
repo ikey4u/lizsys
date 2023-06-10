@@ -4,12 +4,15 @@
 # source ${SCRIPT_DIR}/../builtin/env.sh
 
 export LIZSYS_SHELL_CONF=
+export LIZSYS_SHELL_NAME=
 case "$(basename $SHELL)" in
     bash)
         LIZSYS_SHELL_CONF=${HOME}/.bashrc
+        LIZSYS_SHELL_NAME=bash
         ;;
     zsh)
         LIZSYS_SHELL_CONF=${HOME}/.zshrc
+        LIZSYS_SHELL_NAME=zsh
         ;;
     *)
         echo "[x] unsupported shell $SHELL"

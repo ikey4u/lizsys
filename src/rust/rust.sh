@@ -33,7 +33,7 @@ EOF
     if ! grep -q LIZSYS_STARSHIP_MARK ${shconf}; then
         cat >> ${shconf} <<EOF
 # LIZSYS_STARSHIP_MARK
-eval "\$(starship init bash)"
+eval "\$(starship init ${LIZSYS_SHELL_NAME})"
 EOF
     fi
     mkdir -p ${HOME}/.config
