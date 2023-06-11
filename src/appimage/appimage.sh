@@ -44,12 +44,36 @@ Keywords=music;qq;qqmusic;
 EOF
 }
 
+function appimage_install_wezterm() {
+    local appdir=${LIZSYS_APP_DIR}/wezterm
+    mkdir -p ${appdir} && cd ${appdir}
+    local pkgname=wezterm.AppImage
+    if [[ ! -e "${pkgname}" ]]; then
+        curl -L https://github.com/wez/wezterm/releases/download/20230408-112425-69ae8472/WezTerm-20230408-112425-69ae8472-Ubuntu20.04.AppImage -o $pkgname
+    fi
+    chmod +x ${pkgname}
+    cat > ${DESKTOP_ENTRY_DIR}/wezterm.desktop <<EOF
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=WezTerm
+Path=${appdir}
+Exec=${appdir}/${pkgname}
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=terminal;console;wezterm
+EOF
+}
+
 case $1 in
     appimage.qqmusic)
         appimage_install_qqmusic
         ;;
     appimage.keepassxc)
         appimage_install_keepassxc
+        ;;
+    appimage.wezterm)
+        appimage_install_wezterm
         ;;
 esac
 if [[ -x $(command -v apt-get) ]]; then

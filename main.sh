@@ -20,7 +20,7 @@ function main() {
         llvm)
             bash ${LIZSYS_HOME}/src/llvm/llvm.sh
             ;;
-        appimage.qqmusic|appimage.keepassxc)
+        appimage.qqmusic|appimage.keepassxc|appimage.wezterm)
             bash ${LIZSYS_HOME}/src/appimage/appimage.sh $1
             ;;
     esac
