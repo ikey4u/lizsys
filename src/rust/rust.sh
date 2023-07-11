@@ -5,21 +5,8 @@ function rust_install() {
     if [[ ! -x $(command -v cargo) ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     fi
+    local shconf=${LIZSYS_SHELL_CONF}
 
-    # TODO: replace with LIZSYS_SHELL_CONF
-    local shconf=
-    case "$(basename $SHELL)" in
-        bash)
-            shconf=${HOME}/.bashrc
-            ;;
-        zsh)
-            shconf=${HOME}/.zshrc
-            ;;
-        *)
-            echo "[x] unsupported shell $SHELL"
-            return 1
-        ;;
-    esac
     # cargo
     if ! grep -q LIZSYS_RUST_MARK ${shconf}; then
         cat >> ${shconf} <<EOF
@@ -29,8 +16,8 @@ EOF
     fi
 
     # starship
-    ${HOME}/.cargo/bin/cargo install starship
     if ! grep -q LIZSYS_STARSHIP_MARK ${shconf}; then
+        ${HOME}/.cargo/bin/cargo install starship
         cat >> ${shconf} <<EOF
 # LIZSYS_STARSHIP_MARK
 eval "\$(starship init ${LIZSYS_SHELL_NAME})"
@@ -41,8 +28,8 @@ EOF
     ln -s ${SCRIPT_DIR}/starship.toml ${HOME}/.config/starship.toml
 
     # vivid
-    ${HOME}/.cargo/bin/cargo install vivid
     if ! grep -q LIZSYS_VIVID_MARK ${shconf}; then
+        ${HOME}/.cargo/bin/cargo install vivid
         cat >> ${shconf} <<EOF
 # LIZSYS_VIVID_MARK
 export LS_COLORS="\$(vivid generate dracula)"
@@ -51,10 +38,24 @@ EOF
     fi
 
     # gitui
-    ${HOME}/.cargo/bin/cargo install gitui
+    if ! grep -q LIZSYS_GITUI_MARK ${shconf}; then
+        ${HOME}/.cargo/bin/cargo install gitui
+        cat >> ${shconf} <<EOF
+# LIZSYS_GITUI_MARK
+EOF
+    fi
     mkdir -p $HOME/.config/gitui
     rm -rf $HOME/.config/gitui/key_bindings.ron
     ln -s ${SCRIPT_DIR}/key_bindings.ron $HOME/.config/gitui/key_bindings.ron
+
+    # zoxide
+    if ! grep -q LIZSYS_ZOXIDE_MARK ${shconf}; then
+        ${HOME}/.cargo/bin/cargo install zoxide --locked
+        cat >> ${shconf} <<EOF
+# LIZSYS_ZOXIDE_MARK
+eval "\$(zoxide init ${LIZSYS_SHELL_NAME})"
+EOF
+    fi
 }
 
 rust_install
