@@ -53,7 +53,7 @@ EOF
         ${HOME}/.cargo/bin/cargo install zoxide --locked
         cat >> ${shconf} <<EOF
 # LIZSYS_ZOXIDE_MARK
-eval "\$(zoxide init ${LIZSYS_SHELL_NAME})"
+eval "\$(zoxide init ${LIZSYS_SHELL_NAME} --cmd cd)"
 EOF
     fi
 }
