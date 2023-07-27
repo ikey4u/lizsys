@@ -146,14 +146,14 @@ lsp.bashls.setup({
 --
 -- For android development, you may export the java bundled with Android Studio into PATH,
 -- or else neovim will use the system java which could not work with kotlin.
+if vim.env.ANDROID_JDK_DIR == nil then
+    print("ANDROID_JDK_DIR is not set, your kotlin_language_server may not work")
+end
 lsp.kotlin_language_server.setup({
-    settings = {
-        kotlin = {
-            java = {
-                home = vim.env.ANDROID_JDK_DIR,
-            }
-        }
-    }
+    cmd_env = {
+        PATH = vim.env.ANDROID_JDK_DIR .. "/bin:" .. vim.env.PATH,
+        JAVA_HOME = vim.env.ANDROID_JDK_DIR,
+    },
 })
 
 -- lsp.vimscript
