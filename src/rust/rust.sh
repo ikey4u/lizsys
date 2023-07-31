@@ -56,6 +56,15 @@ EOF
 eval "\$(zoxide init ${LIZSYS_SHELL_NAME} --cmd cd)"
 EOF
     fi
+
+    # fnm
+    if ! grep -q LIZSYS_FNM ${shconf}; then
+        ${HOME}/.cargo/bin/cargo install fnm
+        cat >> ${shconf} <<EOF
+# LIZSYS_FNM
+eval "\$(fnm env)"
+EOF
+    fi
 }
 
 rust_install
