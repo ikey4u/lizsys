@@ -1,8 +1,8 @@
 function python_install() {
     if [[ ! -d "${HOME}/.pyenv" ]]; then
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-        if ! grep -q LIZSYS_PYENV_MARK ${HOME}/.bashrc; then
-            cat >> ${HOME}/.bashrc <<EOF
+        if ! grep -q LIZSYS_PYENV_MARK ${LIZSYS_SHELL_CONF}; then
+            cat >> ${LIZSYS_SHELL_CONF} <<EOF
 # LIZSYS_PYENV_MARK
 export PYENV_ROOT="\$HOME/.pyenv"
 export PATH="\$PYENV_ROOT/bin:\$PATH"
@@ -13,6 +13,7 @@ EOF
         fi
     fi
 
+if [[ "${LIZSYS_OS}" == Linux ]]; then
     local deps_done=NO
     if [[ -x $(command -v yum) ]]; then
         sudo yum install -y gcc gcc-c++ make git patch openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel zlib libffi-devel xz-devel
@@ -28,6 +29,9 @@ EOF
         echo "[x] failed to install dependencies"
         return 1
     fi
+else
+    brew install xz
+fi
 
     local pyver=3.9.5
     PYTHON_CONFIGURE_OPTS="--enable-shared" ${HOME}/.pyenv/bin/pyenv install ${pyver}

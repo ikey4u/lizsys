@@ -56,7 +56,7 @@ EOF
             echo "[!] please install pyenv then python3"
         fi
     else
-        python3 -m pip install --user pynvim neovim neovim-remote 
+        python3 -m pip install --user pynvim neovim neovim-remote
     fi
 }
 

@@ -6,31 +6,35 @@ SCRIPT_DIR=$(cd $(dirname ${BASH_SOURCE}); pwd -P)
 function install_tmux() {
     local appdir=${LIZSYS_APP_DIR}/tmux
     local tmpdir=${appdir}/tmp
-    mkdir -p ${tmpdir} && cd ${appdir}
 
+    cd ${appdir}
     # TODO: check if tmux exists and install if does not exist
     if [[ ! -x "$(command -v tmux)" ]]; then
-        if [[ ! -d tmp ]]; then
-            git clone https://github.com/tmux/tmux.git ${tmpdir}
-        fi
-        if [[ -x $(command -v apt-get) ]]; then
-            sudo apt-get install -y automake libevent-dev ncurses-dev build-essential bison pkg-config
-        fi
-        if [[ -x $(command -v yum) ]]; then
-            sudo yum install -y automake libevent-devel ncurses-devel gcc make bison pkg-config 
-        fi
-        cd ${tmpdir}
-        git checkout tags/3.3a
-        bash autogen.sh
-        ./configure --prefix=${appdir}/3.3a
-        make -j8
-        make install
-    fi
-    if ! grep -q LIZSYS_TMUX_MARK ${LIZSYS_SHELL_CONF}; then
-        cat >> ${LIZSYS_SHELL_CONF} <<EOF
+        if [[ "${LIZSYS_OS}" == Linux ]]; then
+            if [[ ! -d ${tmpdir} ]]; then
+                git clone https://github.com/tmux/tmux.git ${tmpdir}
+            fi
+            if [[ -x $(command -v apt-get) ]]; then
+                sudo apt-get install -y automake libevent-dev ncurses-dev build-essential bison pkg-config
+            fi
+            if [[ -x $(command -v yum) ]]; then
+                sudo yum install -y automake libevent-devel ncurses-devel gcc make bison pkg-config 
+            fi
+            cd ${tmpdir}
+            git checkout tags/3.3a
+            bash autogen.sh
+            ./configure --prefix=${appdir}/3.3a
+            make -j8
+            make install
+            if ! grep -q LIZSYS_TMUX_MARK ${LIZSYS_SHELL_CONF}; then
+                cat >> ${LIZSYS_SHELL_CONF} <<EOF
 # LIZSYS_TMUX_MARK
 export PATH=\${PATH}:${appdir}/3.3a/bin
 EOF
+            fi
+        else
+            brew install tmux
+        fi
     fi
 
     local confpath=${HOME}/.tmux.conf

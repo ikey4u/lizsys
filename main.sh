@@ -1,3 +1,5 @@
+set -e
+
 source $(dirname ${BASH_SOURCE})/src/builtin/env.sh
 
 function main() {
@@ -26,4 +28,16 @@ function main() {
     esac
 }
 
+if [[ "${LIZSYS_OS}" == Darwin ]]; then
+    if [[ ! -x $(command -v brew) ]]; then
+        echo "macOS requires brew, install it now ..."
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ${LIZSYS_SHELL_CONF}
+        source ${LIZSYS_SHELL_CONF}
+    fi
+
+    if [[ ! -x $(command -v cmake) ]]; then
+        brew install cmake
+    fi
+fi
 main $*
