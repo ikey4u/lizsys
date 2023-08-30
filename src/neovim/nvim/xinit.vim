@@ -297,7 +297,7 @@ noremap <silent> <C-h> :vertical resize +3<CR>
 noremap <silent> <C-l> :vertical resize -3<CR>
 noremap <silent> <C-j> :resize +3<CR>
 noremap <silent> <C-k> :resize -3<CR>
-nnoremap Cs :StripWhitespace<CR>
+nnoremap Cs :%s/\s+$//ge<CR>
 
 " load vim plugins
 let plugins = [
@@ -316,8 +316,6 @@ Plug 'mattn/emmet-vim'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-startify'
 let g:startify_files_number = 20
-Plug 'ntpeters/vim-better-whitespace'
-let g:better_whitespace_enabled=1
 Plug 'ryanoasis/vim-devicons'
 Plug 'udalov/kotlin-vim'
 if g:os != "Windows"
