@@ -10,9 +10,6 @@ function main() {
         rust)
             bash ${LIZSYS_HOME}/src/rust/rust.sh
             ;;
-        neovim)
-            bash ${LIZSYS_HOME}/src/neovim/neovim.sh
-            ;;
         tmux)
             bash ${LIZSYS_HOME}/src/tmux/tmux.sh
             ;;
